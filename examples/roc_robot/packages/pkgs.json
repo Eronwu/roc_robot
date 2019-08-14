@@ -1,0 +1,22 @@
+[
+ {
+  "path": "/packages/tools/EasyFlash", 
+  "ver": "v3.2.1", 
+  "name": "EASYFLASH"
+ }, 
+ {
+  "path": "/packages/system/fal", 
+  "ver": "v0.2.0", 
+  "name": "FAL"
+ }, 
+ {
+  "path": "/packages/system/rt_robot", 
+  "ver": "latest", 
+  "name": "ROBOTS"
+ }, 
+ {
+  "path": "/packages/peripherals/stm32_sdio", 
+  "ver": "v1.0.2", 
+  "name": "STM32_SDIO"
+ }
+]
