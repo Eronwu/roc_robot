@@ -22,7 +22,7 @@ void led_flash(void *parameter)
 
     while(1) {
         if (connected < 0) {
-            LOG_D("led_flash ");
+            //LOG_D("led_flash ");
             rt_pin_write(APP_CONNECT_LED_PIN, PIN_LOW);
             rt_thread_mdelay(500);
             rt_pin_write(APP_CONNECT_LED_PIN, PIN_HIGH);
@@ -44,7 +44,7 @@ void wifi_control(void *parameter)
             switch(protocol_get_function()) {
                 case E_ROBOT_CONTROL_DIRECTION:
                     LOG_D("E_ROBOT_CONTROL_DIRECTION");
-                   // roc_robot_drive(roc_robot_drive());
+                    roc_robot_drive(protocol_get_degree());
                     break;
                 case E_ROBOT_CONTROL_SPEED:
                     LOG_D("E_ROBOT_CONTROL_SPEED");
@@ -68,7 +68,6 @@ void wifi_control(void *parameter)
                     }
                     break;
             }
-
         }
       // if (roc_robot_get_status() != E_STOP)
       // roc_robot_stop();

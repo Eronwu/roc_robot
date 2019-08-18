@@ -1,36 +1,38 @@
 #ifndef  __ROC_ROBOT_H__
 #define  __ROC_ROBOT_H__
 
-#include <dual_pwm_motor.h>
+#include "single_pwm_motor.h"
 #include <ab_phase_encoder.h>
 #include <inc_pid_controller.h>
 #include <rtthread.h>
 #include <chassis.h>
 
 // MOTOR
-#define LEFT_FORWARD_A_PWM            "pwm4"
-#define LEFT_FORWARD_A_PWM_CHANNEL    1         // GPIO PD12
-#define LEFT_FORWARD_B_PWM            "pwm4"
-#define LEFT_FORWARD_B_PWM_CHANNEL    2         // GPIO PD13
+#define LEFT_FORWARD_PWM            "pwm4"
+#define LEFT_FORWARD_PWM_CHANNEL    1           // GPIO PD12
+#define LEFT_FORWARD_GPIO_PIN_IN1   60          // GPIO PD13
+#define LEFT_FORWARD_GPIO_PIN_IN2   29          // GPIO PA4
 
-#define LEFT_BACKWARD_A_PWM           "pwm4"   
-#define LEFT_BACKWARD_A_PWM_CHANNEL   3         // GPIO PB8
-#define LEFT_BACKWARD_B_PWM           "pwm4"
-#define LEFT_BACKWARD_B_PWM_CHANNEL   4         // GPIO PB9
 
-#define RIGHT_FORWARD_A_PWM           "pwm2"
-#define RIGHT_FORWARD_A_PWM_CHANNEL   1          // GPIO PA0
-#define RIGHT_FORWARD_B_PWM           "pwm2"
-#define RIGHT_FORWARD_B_PWM_CHANNEL   2          // GPIO PA1
+#define LEFT_BACKWARD_PWM           "pwm4"   
+#define LEFT_BACKWARD_PWM_CHANNEL   3          // GPIO PB8
+#define LEFT_BACKWARD_GPIO_PIN_IN1  96         // GPIO PB9
+#define LEFT_BACKWARD_GPIO_PIN_IN2  67         // GPIO PA8
 
-#define RIGHT_BACKWARD_A_PWM          "pwm2"
-#define RIGHT_BACKWARD_A_PWM_CHANNEL  3          // GPIO PB10
-#define RIGHT_BACKWARD_B_PWM          "pwm2"
-#define RIGHT_BACKWARD_B_PWM_CHANNEL  4          // GPIO PB11
+#define RIGHT_FORWARD_PWM           "pwm2"
+#define RIGHT_FORWARD_PWM_CHANNEL   1          // GPIO PA0
+#define RIGHT_FORWARD_GPIO_PIN_IN1  24         // GPIO PA1
+#define RIGHT_FORWARD_GPIO_PIN_IN2  17         // GPIO PC2
+
+
+#define RIGHT_BACKWARD_PWM          "pwm2"
+#define RIGHT_BACKWARD_PWM_CHANNEL   3          // GPIO PB10
+#define RIGHT_BACKWARD_GPIO_PIN_IN1  48         // GPIO PB11
+#define RIGHT_BACKWARD_GPIO_PIN_IN2  33         // GPIO PC4
 
 // ENCODER
-#define LEFT_FORWARD_ENCODER_PIN_A     34     // GET_PIN(C, 2)
-#define LEFT_BACKWARD_ENCODER_PIN_A    36     // GET_PIN(C, 4)
+#define LEFT_FORWARD_ENCODER_PIN_A     51     // GET_PIN(C, 2)
+#define LEFT_BACKWARD_ENCODER_PIN_A    52     // GET_PIN(C, 4)
 #define RIGHT_FORWARD_ENCODER_PIN_A    38     // GET_PIN(C, 6)
 #define RIGHT_BACKWARD_ENCODER_PIN_A   39     // GET_PIN(C, 7)
 
@@ -97,7 +99,7 @@ typedef enum
 
 typedef struct {
 
-    dual_pwm_motor_t left_forward_motor, left_backward_motor, right_forward_motor, right_backward_motor;
+    single_pwm_motor_t left_forward_motor, left_backward_motor, right_forward_motor, right_backward_motor;
     ab_phase_encoder_t left_forward_encoder, left_backward_encoder, right_forward_encoder, right_backward_encoder;
     inc_pid_controller_t left_forward_pid, left_backward_pid, right_forward_pid, right_backward_pid;
     wheel_t left_forward_wheel, left_backward_wheel, right_forward_wheel, right_backward_wheel;
@@ -118,7 +120,7 @@ void roc_robot_go_backward(void);
 void roc_robot_turn_left(void);
 void roc_robot_turn_right(void);
 void roc_robot_stop(void);
-void roc_robot_drive(int degree);
+void roc_robot_drive(rt_uint16_t degree);
 
 void roc_robot_set_speed(rt_int16_t s);
 int  roc_robot_get_speed(void);

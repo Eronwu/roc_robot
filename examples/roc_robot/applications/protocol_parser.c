@@ -147,7 +147,7 @@ rt_int8_t protocol_get_speed(void)
 rt_int16_t protocol_get_degree(void)
 {
     if (pareser_package.recv->function == E_ROBOT_CONTROL_DIRECTION) {
-        return (rt_uint16_t)(*(pareser_package.recv->data));
+        return (uint16_t)(*(pareser_package.recv->data)<< 8) | (uint16_t)(*(pareser_package.recv->data + 1));
     } else {
         return 0;
     }
