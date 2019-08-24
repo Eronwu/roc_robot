@@ -17,7 +17,7 @@
 
 - [wifi驱动移植](application/roc_car/docs/wifi_driver_part.md)
 
-- [应用编写，遥控器wifi控制](application/roc_car/docs/wifi_code_part.md)
+- [应用编写，手机遥控器wifi控制](application/roc_car/docs/mobile_wifi_code_part.md)
 
 - [应用编写，闭环控制]()
 
