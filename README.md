@@ -9,7 +9,9 @@
 
 ### 制作过程
 
-- [选材篇请点这里](application/roc_car/docs/material_part.md)
+- [器件选型篇请点这里](application/roc_car/docs/material_part.md)
+
+- [小车组装改造接线点击](application/roc_car/docs/assemble_part.md)
 
 - [软件环境搭建](application/roc_car/docs/env_part.md)
 
