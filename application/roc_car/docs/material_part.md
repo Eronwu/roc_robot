@@ -4,7 +4,7 @@
 
 1. 主板采用官方推荐潘多拉IoT Board
 特点：MCU:STM32L475 主频:80M 完善RT-theard系统支持，板载AP6181,集成ST-Link非常方便调试
-![lot board](pic\lot-thread.jpg)
+![lot board](pic/lot-thread.jpg)
 [淘宝购买链接](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.6c972e8dSJTwVw&id=583527145598&_u=d33fu11t1ff1)
 
 2. 电机选择
@@ -25,7 +25,7 @@
 
 3、电机驱动板选择
 有了前面电机参数，我们选择驱动板就简单得多了，需要关注参数为驱动电压超过24V，驱动电流大于3A,功率要超过 3*24 = 72W 淘宝找到如下一块满足要求
-![MotorDrive](pic\MotorDrive.jpg)
+![MotorDrive](pic/MotorDrive.jpg)
 |       |产品参数|
 |------|----------|
 |供电电压| 6.5V~27V 不能超过27V|
@@ -45,7 +45,7 @@
 
 4. 电池和开关选择
 前面电机需要24V供电，所以需要串联3组2S 7.4V锂电池组（或者2组3S 11.1V电池组）我们选用3组1800mA 25C航模电池，最大放电 1.8A*25 = 45A 大于 4个电机 峰值电流4*9=36A要求
-![电池](pic\battery.png) ![开关](pic\switch.jpg)
+![电池](pic/battery.png) ![开关](pic/switch.jpg)
 [淘宝购买链接](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.6c972e8dSJTwVw&id=576184061821&_u=d33fu11t2527)
 
 6. 电压降压模块
@@ -62,17 +62,17 @@
 |厚度|50mm|
 |支撑轮抽直径|3mm|
 |支撑轮个数|9个|
-![麦克纳姆轮](pic\wheel.jpg)
+![麦克纳姆轮](pic/wheel.jpg)
 [淘宝购买链接](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.6c972e8dSJTwVw&id=569166349044&_u=d33fu11t43b8)
 
 
 8. 底盘
 由于我们器材都是自选，市面上底盘都无法安装，所以只要自己画个底盘，为了方便调试先做成亚克力，后面定型再做成铝合金
-![底盘图纸](pic\structure.png)
+![底盘图纸](pic/structure.png)
 [底盘soildworks设计文件](https://github.com/Eronwu/roc_robot/tree/master/application/roc_car/docs/roc_robot_structure.SLDDRW)
 
 
 
 ### 组合图
 
-![roc_car](pic\roc_car.jpg)
+![roc_car](pic/roc_car.jpg)
