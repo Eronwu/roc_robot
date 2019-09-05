@@ -12,7 +12,6 @@
 
 Android studio
 
+需要的可以通过这里下载[android app](https://github.com/emakefun/hummer-bot/blob/Hummer-bot4.0/APP/Emakefun_Robot.apk)
 
-
-### 代码目录
-
+PC端软件 还有点小bug 用QT开发
