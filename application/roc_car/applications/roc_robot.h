@@ -31,15 +31,15 @@
 #define RIGHT_BACKWARD_GPIO_PIN_IN2  33         // GPIO PC4
 
 // ENCODER
-#define LEFT_FORWARD_ENCODER_PIN_A     51     // GET_PIN(C, 2)
-#define LEFT_BACKWARD_ENCODER_PIN_A    52     // GET_PIN(C, 4)
-#define RIGHT_FORWARD_ENCODER_PIN_A    38     // GET_PIN(C, 6)
-#define RIGHT_BACKWARD_ENCODER_PIN_A   39     // GET_PIN(C, 7)
+#define LEFT_FORWARD_ENCODER_PIN_A     51     // GET_PIN(B, 12)
+#define LEFT_BACKWARD_ENCODER_PIN_A    61     // GET_PIN(D, 14)
+#define RIGHT_FORWARD_ENCODER_PIN_A    53     // GET_PIN(B, 14)
+#define RIGHT_BACKWARD_ENCODER_PIN_A   63     // GET_PIN(C, 6)
 
-#define LEFT_FORWARD_ENCODER_PIN_B     51     // GET_PIN(B, 12)
-#define LEFT_BACKWARD_ENCODER_PIN_B    52     // GET_PIN(B, 13)
-#define RIGHT_FORWARD_ENCODER_PIN_B    53     // GET_PIN(B, 14)
-#define RIGHT_BACKWARD_ENCODER_PIN_B   54     // GET_PIN(B, 15)
+#define LEFT_FORWARD_ENCODER_PIN_B     52     // GET_PIN(B, 13)
+#define LEFT_BACKWARD_ENCODER_PIN_B    62     // GET_PIN(D, 15)
+#define RIGHT_FORWARD_ENCODER_PIN_B    54     // GET_PIN(B, 15)
+#define RIGHT_BACKWARD_ENCODER_PIN_B   64     // GET_PIN(C, 7)
 
 #define PULSE_PER_REVOL             20     // Real value 20
 #define SAMPLE_TIME                1000
@@ -118,11 +118,15 @@ void roc_robot_init(void *parameter);
 void roc_robot_go_forward(void);
 void roc_robot_go_backward(void);
 void roc_robot_turn_left(void);
+void roc_robot_turn_left_rotate(void);
 void roc_robot_turn_right(void);
+void roc_robot_turn_right_rotate(void);
+
 void roc_robot_stop(void);
 void roc_robot_drive(rt_uint16_t degree);
 
 void roc_robot_set_speed(rt_int16_t s);
+void roc_robot_run(rt_int16_t x, rt_int16_t y, rt_int16_t rotate);
 int  roc_robot_get_speed(void);
 void roc_robot_set_status(E_ROC_ROBOT_STATUS status);
 E_ROC_ROBOT_STATUS roc_robot_get_status(void);

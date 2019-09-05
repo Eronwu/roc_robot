@@ -65,6 +65,12 @@ void wifi_control(void *parameter)
                         case BT_PAD_RIGHT:
                             roc_robot_turn_right();
                             break;
+                        case BT_GREEN:
+                            roc_robot_turn_left_rotate();
+                            break;
+                        case BT_BLUE:
+                            roc_robot_turn_right_rotate();
+                            break;
                     }
                     break;
             }

@@ -110,6 +110,7 @@ void tcprecvserv(void *parameter)
            for(int i = 0; i < bytes_received; i++) {
                 rt_kprintf("%x ", *(recv_data+i));
            }*/
+           rt_kprintf("RECEIVED DATA = %s \n", recv_data);
            rt_ringbuffer_put_force(tcp_dat, (const rt_uint8_t *)recv_data, bytes_received);
         }
     }

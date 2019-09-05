@@ -1,4 +1,5 @@
 #include <roc_robot.h>
+#include <math.h>
 
 #define DBG_SECTION_NAME  "roc_robot"
 #define DBG_LEVEL         DBG_LOG
@@ -43,7 +44,7 @@ void roc_robot_init(void *parameter)
     c_wheels[3] = roc_robot.right_backward_wheel = wheel_create((motor_t)roc_robot.right_backward_motor, (encoder_t)roc_robot.right_backward_encoder, (controller_t)roc_robot.right_backward_pid, WHEEL_RADIUS, GEAR_RATIO);
 
     // 2. Iinialize Kinematics - Two Wheel Differential Drive
-    kinematics_t c_kinematics = kinematics_create(FOUR_WD, WHEEL_DIST_X, WHEEL_DIST_Y, WHEEL_RADIUS);
+    kinematics_t c_kinematics = kinematics_create(MECANUM, WHEEL_DIST_X, WHEEL_DIST_Y, WHEEL_RADIUS);
 
     // 3. Initialize Chassis
     chas = chassis_create(c_wheels, c_kinematics);
@@ -72,7 +73,7 @@ void roc_robot_go_forward(void)
     single_pwm_motor_set_speed(roc_robot.left_backward_motor, roc_robot.speed *10);
     single_pwm_motor_set_speed(roc_robot.right_forward_motor, roc_robot.speed *10);
     single_pwm_motor_set_speed(roc_robot.right_backward_motor, roc_robot.speed *10);
-    roc_robot.status = E_RIGHT;
+    roc_robot.status = E_FORWARD;
 }
 
 void roc_robot_go_backward(void)
@@ -88,22 +89,43 @@ void roc_robot_go_backward(void)
 void roc_robot_turn_right(void)
 {
     LOG_D("roc_robot_turn_right");
-    single_pwm_motor_set_speed(roc_robot.left_forward_motor, -roc_robot.speed *10);
-    single_pwm_motor_set_speed(roc_robot.left_backward_motor, roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.left_forward_motor, roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.left_backward_motor, -roc_robot.speed *10);
     single_pwm_motor_set_speed(roc_robot.right_forward_motor, -roc_robot.speed *10);
     single_pwm_motor_set_speed(roc_robot.right_backward_motor, roc_robot.speed *10);
-    roc_robot.status = E_LEFT;
+    roc_robot.status = E_RIGHT;
+}
+
+void roc_robot_turn_right_rotate(void)
+{
+    LOG_D("roc_robot_turn_right_rotate");
+    single_pwm_motor_set_speed(roc_robot.left_forward_motor, roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.left_backward_motor, roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.right_forward_motor, -roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.right_backward_motor, -roc_robot.speed *10);
+    roc_robot.status = E_RIGHT_ROTATE;
 }
 
 void roc_robot_turn_left(void)
 {
     LOG_D("roc_robot_turn_left");
-    single_pwm_motor_set_speed(roc_robot.left_forward_motor, roc_robot.speed *10);
-    single_pwm_motor_set_speed(roc_robot.left_backward_motor, -roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.left_forward_motor, -roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.left_backward_motor, roc_robot.speed *10);
     single_pwm_motor_set_speed(roc_robot.right_forward_motor, roc_robot.speed *10);
     single_pwm_motor_set_speed(roc_robot.right_backward_motor, -roc_robot.speed *10);
-    roc_robot.status = E_RIGHT;
+    roc_robot.status = E_LEFT;
 }
+
+void roc_robot_turn_left_rotate(void)
+{
+    LOG_D("roc_robot_turn_left_rotate");
+    single_pwm_motor_set_speed(roc_robot.left_forward_motor, -roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.left_backward_motor, -roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.right_forward_motor, roc_robot.speed *10);
+    single_pwm_motor_set_speed(roc_robot.right_backward_motor, roc_robot.speed *10);
+    roc_robot.status = E_LEFT_ROTATE;
+}
+
 
 void roc_robot_stop(void)
 {
@@ -115,11 +137,30 @@ void roc_robot_stop(void)
     roc_robot.status = E_STOP;
 }
 
+void roc_robot_run(rt_int16_t x, rt_int16_t y, rt_int16_t rotate)
+{
+    rt_int16_t lf_speed = x + y + rotate; 
+    rt_int16_t lb_speed = -x + y + rotate;
+    rt_int16_t rf_speed = -x + y -rotate;
+    rt_int16_t rb_speed = x + y - rotate;
+    single_pwm_motor_set_speed(roc_robot.left_forward_motor, lf_speed *10);
+    single_pwm_motor_set_speed(roc_robot.left_backward_motor, lb_speed *10);
+    single_pwm_motor_set_speed(roc_robot.right_forward_motor, rf_speed *10);
+    single_pwm_motor_set_speed(roc_robot.right_backward_motor, rb_speed *10);
+}
+
 void roc_robot_drive(rt_uint16_t degree)
 {
     LOG_D("roc_robot_drive %d", degree);
+    rt_int16_t x, y;
+
+
     if (degree == 0XFFFF) {
         roc_robot_stop();
+    } else {
+        x = cos(degree)*roc_robot.speed;
+        y = sin(degree)*roc_robot.speed;
+        roc_robot_run(x, y, 0);
     }
 }
 
