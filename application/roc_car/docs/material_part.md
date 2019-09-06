@@ -70,7 +70,7 @@
 ### 电压降压模块
 选用LM2596S 24V转5V,最大电流3A,给lot-board和编码电机供电
 
-![24V转5V模块](pic\LM2596S.png)
+![24V转5V模块](pic/LM2596S.png)
 
 [淘宝购买链接](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.6c972e8dSJTwVw&id=576184061821&_u=d33fu11t2527)
 
