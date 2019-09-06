@@ -40,15 +40,16 @@ typedef struct {
     rt_int16_t degree;
 }ST_ROC_ROBOT;
 ```
-使用的时候再封装如下几个操作函数
-roc_robot_init() 
-roc_robot_go_forward()
-roc_robot_go_backward() 
-roc_robot_turn_right()
-roc_robot_turn_right_rotate()
-roc_robot_turn_left()
-roc_robot_turn_left_rotate()
-roc_robot_stop()
+使用的时候再封装如下几个操作函数：
+
+	roc_robot_init() 
+	roc_robot_go_forward()
+	roc_robot_go_backward() 
+	roc_robot_turn_right()
+	roc_robot_turn_right_rotate()
+	roc_robot_turn_left()
+	roc_robot_turn_left_rotate()
+	roc_robot_stop()
 
 ### 控制基础原理
 为了实现上面几个函数我们需要了解一些最基本的原理，首先我们控制小车前进，后退，向左，向右,左旋，右旋这六个个基本功能
@@ -56,6 +57,7 @@ roc_robot_stop()
 ![mg](pic/drive.jpg)
 
 旋转原理
+
 ![mg](pic/turn_rotate.png)
 
 前面只是几个基本动作的控制，如果我们要实现全相控制呢？那么我们需要学习一下基础原理知识
@@ -63,31 +65,37 @@ roc_robot_stop()
 我们知道，全向移动底盘是一个纯线性系统，而刚体运动又可以线性分解为三个分量。那么只需要计算出麦轮底盘在Vx「沿X轴平移」、Vy「沿Y轴平移」、w「绕几何中心自转」时，四个轮子的速度，就可以通过简单的加法，计算出这三种简单运动所合成的「平动+旋转」运动时所需要的四个轮子的转速。而这三种简单运动时，四个轮子的速度可以通过简单的测试，或是推动底盘观察现象得出。
 
 当底盘沿着 X 轴平移时：
-V左前 = +Vx
-V右前 = -Vx
-V左后 = - Vx
-V右后 = +Vx
+
+	V左前 = +Vx
+	V右前 = -Vx
+	V左后 = - Vx
+	V右后 = +Vx
 
 当底盘沿着 Y 轴平移时：
-V左前 =  Vy
-V右前 =  Vy
-V左后 =  Vy
-V右后 =  Vy
+
+	V左前 =  Vy
+	V右前 =  Vy
+	V左后 =  Vy
+	V右后 =  Vy
 
 当底盘绕几何中心自转时：
-V左前 =  W
-V右前 =  -W
-V左后 = W
-V右后 = -W
 
-将以上三个方程组相加，得到的恰好是根据「传统」方法计算出的角度
+	V左前 =  W
+	V右前 =  -W
+	V左后 = W
+	V右后 = -W
+
+将以上三个方程组相加，得到的恰好是根据「传统」方法计算出的角度，
+
 综合到一起就是
-V左前 = +Vx + Vy + W
-V右前 = -Vx + Vy -W
-V左后 = - Vx + Vy + W
-V右后 = +Vx + Vy -W
+
+	V左前 = +Vx + Vy + W
+	V右前 = -Vx + Vy -W
+	V左后 = - Vx + Vy + W
+	V右后 = +Vx + Vy -W
 
 由于 rt-robot 的全向控制和我遥控程序的坐标系不同所以重新实现了一下这个函数
+
 ```
 void roc_robot_run(rt_int16_t x, rt_int16_t y, rt_int16_t rotate)
 {
@@ -115,32 +123,35 @@ void roc_robot_run(rt_int16_t x, rt_int16_t y, rt_int16_t rotate)
 	    rt_uint8_t end_code;      // 8bit 0x55
 	} ST_PROTOCOL; // wifi数据字节流结构体
 
-​	typedef enum
-​	{
-​	    E_BATTERY = 1,
-​	    E_LED,
-​	    E_BUZZER,
-​	    E_INFO,
-​	    E_ROBOT_CONTROL_DIRECTION,  //机器人控制角度 （0~360）
-​	    E_ROBOT_CONTROL_SPEED,      //机器人控制速度 （0~100）
-​	    E_TEMPERATURE,
-​	    E_INFRARED_TRACKING,
-​	    E_ULTRASONIC,
-​	    E_INFRARED_REMOTE,
-​	    E_INFRARED_AVOIDANCE,
-​	    E_CONTROL_MODE,  //12
-​	    E_BUTTON,
-​	    E_LED_MAXTRIX,
-​	    E_CMD_LINE,
-​	    E_VERSION,
-​	    E_UPGRADE,
-​	    E_PHOTORESISTOR,
-​	    E_SERVER_DEGREE,
-​	    E_CONTOROL_CODE_MAX,
-​	} E_CONTOROL_FUNC; // wifi控制指令功能部分
+	typedef enum
+	{
+	    E_BATTERY = 1,
+	    E_LED,
+	    E_BUZZER,
+	    E_INFO,
+	    E_ROBOT_CONTROL_DIRECTION,  //机器人控制角度 （0~360）
+	    E_ROBOT_CONTROL_SPEED,      //机器人控制速度 （0~100）
+	    E_TEMPERATURE,
+	    E_INFRARED_TRACKING,
+	    E_ULTRASONIC,
+	    E_INFRARED_REMOTE,
+	    E_INFRARED_AVOIDANCE,
+	    E_CONTROL_MODE,  //12
+	    E_BUTTON,
+	    E_LED_MAXTRIX,
+	    E_CMD_LINE,
+	    E_VERSION,
+	    E_UPGRADE,
+	    E_PHOTORESISTOR,
+	    E_SERVER_DEGREE,
+	    E_CONTOROL_CODE_MAX,
+	} E_CONTOROL_FUNC; // wifi控制指令功能部分
 
 我们先来看下wifi遥控界面张什么样子
+
 ![mg](pic/android.png)
+
+
 Android端APP界面示意图
 
 -	“A、D”部分为加减速按钮。
@@ -150,12 +161,17 @@ Android端APP界面示意图
 -	“I” 部分为遥控手柄切换。
 -	“J” 部分为当前速度显示。
 -	通过上面图片我们知道我将0~360度作为全向运动的方向角，基础控制速度可调节，左右旋转独立
-我们先建立如下一个xy 轴和0~360度的对应控制关系坐标系如下![image](pic/degree.png)
+
+我们先建立如下一个xy 轴和0~360度的对应控制关系坐标系如下
+
+![image](pic/degree.png)
+
 
 假如这个时候我们从wifi获取到角度 为 degree，由于apk设计原因，没有做旋转角度指盘
 那么x轴和y轴的速度为如下
-Vx = cos(degree) * speed
-Vy = sin(degree)*speed
+
+	Vx = cos(degree) * speed
+	Vy = sin(degree)*speed
 
 上面这个计算公式，就可以很容易实现如下代码
 
@@ -177,17 +193,17 @@ void roc_robot_drive(rt_uint16_t degree)
 
 ### 整个程序流程如下：
 
-main.c:
+	main.c:
 
-wifi_auto_connect(); // 自动链接wifi热点函数
+	wifi_auto_connect(); // 自动链接wifi热点函数
 
-roc_robot_init(0); // 使用RT-Robot框架初始化RT-Robot驱动, 函数前进后退方法都在roc_robot.c里面
+	roc_robot_init(0); // 使用RT-Robot框架初始化RT-Robot驱动, 函数前进后退方法都在roc_robot.c里面
 
-rt_thread_create("led_flash", led_flash... // 判断wifi连接情况起的线程
+	rt_thread_create("led_flash", led_flash... // 判断wifi连接情况起的线程
 
-ret = rt_thread_create("wifi_control", wifi_control... // 将接受的wifi数据转化为指令执行
+	ret = rt_thread_create("wifi_control", wifi_control... // 将接受的wifi数据转化为指令执行
 
-tcprecvserv((void *)pareser_package.buffer); // 接受wifi数据到data下
+	tcprecvserv((void *)pareser_package.buffer); // 接受wifi数据到data下
 
 ### 代码流程
 
