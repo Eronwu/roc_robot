@@ -57,9 +57,9 @@ static void pwm_get_channel(void)
 ````
 
 在调试pwm的过程中 我们如果遇到电机不动，可以如下将drv_pwm的log打开，然后看log哪里出错，如果整个流程都通还不动，可以对照pwm裸机程序调试
-#define DBG_SECTION_NAME     "drv.pwm"
-#define DBG_LEVEL     DBG_LOG
-#include <rtdbg.h>
+    #define DBG_SECTION_NAME     "drv.pwm"
+    #define DBG_LEVEL     DBG_LOG
+    #include <rtdbg.h>
 
 # wifi tcp service收发数据
 Lot-board板载wifi实在觉得另外接wifi或者其他控制方式没有必要，所以只需要实现tcp service就可以了
