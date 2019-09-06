@@ -37,7 +37,7 @@
 
 - [应用编写，手机遥控器wifi控制](application/roc_car/docs/mobile_wifi_code_part.md)
 
-- [应用编写，闭环控制 暂时未能实现调试好，后面补上 ]()
+- [应用编写，闭环控制 暂时未能实现调试好，后面补上 ](https://github.com/Eronwu/roc_robot/blob/master/README.md)
 
 
 ### 总结
