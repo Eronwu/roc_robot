@@ -57,9 +57,11 @@ static void pwm_get_channel(void)
 ````
 
 在调试pwm的过程中 我们如果遇到电机不动，可以如下将drv_pwm的log打开，然后看log哪里出错，如果整个流程都通还不动，可以对照pwm裸机程序调试
+````
     #define DBG_SECTION_NAME     "drv.pwm"
     #define DBG_LEVEL     DBG_LOG
     #include <rtdbg.h>
+````
 
 # wifi tcp service收发数据
 Lot-board板载wifi实在觉得另外接wifi或者其他控制方式没有必要，所以只需要实现tcp service就可以了
@@ -152,16 +154,21 @@ void tcprecvserv(void *parameter)
 ````
 
 默认端口号为5000 ，这里特别强调一下，wifi收数据时一开始收发不知道怎么处理，正打算实现做一个ringbuffer,结果一看RT-thread有个rt_ringbuffer非常好用，使用也非常简单，解决收数据，解析数据一大麻烦
-rt_ringbuffer_create(2*BUFFER_SIZE); 创建ringbuffer
-rt_ringbuffer_put_force(tcp_dat, (const rt_uint8_t *)recv_data, bytes_received);  wifi收到数据后往buffer写数据
+
+    rt_ringbuffer_create(2*BUFFER_SIZE); // 创建ringbuffer
+    rt_ringbuffer_put_force(tcp_dat, (const rt_uint8_t *)recv_data, bytes_received);  // wifi收到数据后往buffer写数据
+
 然后主循环里只需要判断是否有数据就行
+
     while (rt_ringbuffer_data_len(tcp_dat) != 0) {
         ......
         rt_ringbuffer_getchar(tcp_dat, &dat);
         .....
         }
+        
 就可以了，完全不用担心丢包问题
 好了wifi测试来一张图
+
 ![image](pic/tcp_service_test.png)
 
 
